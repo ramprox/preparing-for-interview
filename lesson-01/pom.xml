@@ -11,5 +11,9 @@
 
     <artifactId>lesson-01</artifactId>
 
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <manen.compiler.target>1.8</manen.compiler.target>
+    </properties>
 
 </project>
