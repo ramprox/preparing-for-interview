@@ -1,17 +1,22 @@
 package ru.ramprox;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.ramprox.dao.StudentDao;
 import ru.ramprox.dao.StudentDaoImpl;
 import ru.ramprox.entity.Student;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) {
-
         SessionFactory sessionFactory = SessionFactoryFactory.getSessionFactory();
         StudentDao studentDao = new StudentDaoImpl(sessionFactory);
 
@@ -23,7 +28,7 @@ public class Main {
         }
 
         // ------ Select By Id ---------
-        Student student = studentDao.findById(414L);
+        Student student = studentDao.findById(414L).get();
         System.out.println(student);
 
         // ------ Update ---------------
@@ -31,15 +36,15 @@ public class Main {
         studentDao.update(student);
 
         // ------ Checking update
-        student = studentDao.findById(414L);
+        student = studentDao.findById(414L).get();
         System.out.println(student);
 
         // ------ Delete ------------
         studentDao.delete(student);
 
         // ------ Checking delete -----
-        student = studentDao.findById(414L);
-        System.out.println(student);
+        Optional<Student> studentOpt = studentDao.findById(414L);
+        studentOpt.ifPresent(System.out::println);
 
         // ------ Find all students ---------
         List<Student> students = studentDao.findAll();
