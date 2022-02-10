@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head('Students')"></head>
+<body>
+<div class="container" style="min-width: 700px;">
+    <div th:replace="fragments/common :: header"></div>
+    <div class="row mb-3 mx-0">
+        <div class="col p-1">
+            <div class="bg-light rounded border border-info p-2 shadow">
+                <a class="btn btn-primary mb-2" th:href="@{/student/new}">Add student</a>
+                <table class="table table-bordered mb-3">
+                    <thead class="bg-info">
+                    <tr>
+                        <th th:replace="fragments/common :: tableHeader('Id')"></th>
+                        <th th:replace="fragments/common :: tableHeader('Name')"></th>
+                        <th th:replace="fragments/common :: tableHeader('Age')"></th>
+                        <th scope="col" class="text-white">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${students.size() > 0}" th:each="student : ${students}">
+                        <th scope="row" th:text="${student.id}">1</th>
+                        <td th:text="${student.name}">Name</td>
+                        <td th:text="${student.age}">Age</td>
+                        <td style="min-width: 120px;">
+                            <a class="btn btn-success" th:href="@{student/{id}(id = ${student.id})}">
+                                <i class="fas fa-edit"></i></a>
+                            <form class="d-inline" th:method="delete" th:action="@{/student/{id}(id = ${student.id})}">
+                                <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${students.size() == 0}">
+                        <td colspan="4" class="text-center">No data</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block th:insert="fragments/common :: end_scripts"></th:block>
+</html>

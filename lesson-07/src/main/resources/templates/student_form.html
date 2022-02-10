@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head('Edit student')"></head>
+<body>
+<div class="container">
+    <header th:replace="fragments/common :: header"/>
+    <div class="row mb-3 mx-0 px-1">
+        <div class="col-md-12 bg-light rounded border border-info shadow py-3">
+            <form th:action="@{/student}" method="post" th:object="${student}">
+                <input type="hidden" id="id" th:field="*{id}">
+                <div class="form-group">
+                    <label>Student name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}"
+                           placeholder="Enter student name">
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label>Age</label>
+                        <input type="text" class="form-control" id="price" th:field="*{age}"
+                               placeholder="Enter product price">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<th:block th:insert="fragments/common :: end_scripts"></th:block>
+</html>
