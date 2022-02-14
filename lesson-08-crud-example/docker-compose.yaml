@@ -1,0 +1,30 @@
+version: '3'
+services:
+  frontend:
+    image: frontend:latest
+    ports:
+      - 8081:80
+    restart: always
+
+  crud-example-backend:
+    image: registry.heroku.com/lesson-08-crud-example/web
+    ports:
+      - 8080
+    environment:
+      DB_HOST: "db"
+    restart: always
+    depends_on:
+      - db
+    command: sh -c "/apps/wait-for-service.sh db 3306 && /apps/entrypoint.sh"
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - 3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
